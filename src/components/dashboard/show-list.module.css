@@ -1,40 +1,73 @@
-.showWrapper{
-    color:white;
-    display: flex;
-    max-width: 100%;
-    overflow-x: scroll;
+.showWrapper {
+  color: white;
+  display: flex;
+  max-width: 100%;
+  overflow-x: scroll;
 }
-.genereName{
-    color:white;
-    text-transform: none;
-    font-weight: bolder;
+
+.genereName {
+  color: white;
+  text-transform: none;
+  font-weight: bolder;
+  font-size: 1.4em;
 }
-.showItem{
-    width: 200px;
-    /* height: 21em; */
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+
+.showItem {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
 }
-.showDetails{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(29, 106, 154, 0.72);
-    color: #fff;
-    visibility: hidden;
-    opacity: 0;
-  
-   
+
+.showDetails {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: visible;
+  min-height: 25%;
+  opacity: 6;
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  border-radius: 10px 10px 10px 10px;
+  padding: 5px;
+  font-weight: bold;
+  padding: 5px;
+  display: inline-block;
 }
-.showImg{
-    border-radius: 20px;
-    cursor: pointer;
+
+.showImg {
+  border-radius: 20px;
 }
-.showImg:hover+.showDetails {
-    visibility: visible;
-    opacity: 1;
-  }
+
+.showListrows {
+  margin: 10px;
+}
+
+.genereList {
+  font-size: 0.7em;
+  word-break: break-all;
+}
+
+.checked {
+  color: orange;
+}
+.checked .genereList {
+  margin-left: 5px;
+}
+
+.favouriteSection {
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+.showDetailsValues {
+  display: flex;
+  flex-direction: row;
+}
+.genereLeft{
+    margin-left: 5px;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./dashboard.module.css";
 import { listallTvShows, listShowsBySearch } from "../../services /api";
-import useDebounce from "../../shared/useDebounceHook";
+import useDebounce from "../../shared/hooks/useDebounceHook";
 import { TVShow, TVShowDetails } from "../../types/types";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { recievedGeneres, recievedShowList } from "../../store/showSlice";
