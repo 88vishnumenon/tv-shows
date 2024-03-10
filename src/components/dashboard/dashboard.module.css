@@ -60,6 +60,12 @@
   font-size: 20px;
 }
 
+.loaderWrapper{
+    position:absolute;
+    left:50%;
+    top:50%;
+}
+
 /* mdedia queries */
 @media screen and (max-width: 600px) {
   .noResultsData {

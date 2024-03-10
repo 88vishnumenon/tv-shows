@@ -72,3 +72,10 @@
 .genereLeft {
   margin-left: 5px;
 }
+
+/* media queries */
+@media screen and (max-width: 600px) {
+  .genereName {
+    font-size: 1.2em;
+  }
+}

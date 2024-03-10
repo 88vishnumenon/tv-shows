@@ -12,9 +12,11 @@ import {
 } from "../../store/showSlice";
 import ShowList from "./show-list";
 import { useEffect, useState } from "react";
+import { Circles } from "react-loader-spinner";
+
+type ShowList = TVShowDetails & TVShowDetailValues;
 
 const Dashboard: React.FC = () => {
-  console.log("dashboard rendered");
   //intialise values
   const dispatch = useAppDispatch();
 
@@ -25,52 +27,66 @@ const Dashboard: React.FC = () => {
   const error = useAppSelector((state) => state.tvshow.error);
   //useStates
   const [searchQuery, setSearchQuery] = useState<string>(searchText);
+  const [loading, setLoading] = useState(false);
+
   const debouncedValue = useDebounce(searchQuery, 500);
 
   //use effects
   useEffect(() => {
-    //getAllshows();
+    if (!searchQuery) {
+      getAllshows();
+    }
   }, []);
 
   useEffect(() => {
-    console.log("searchQuery", searchQuery);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    console.log("inside deboubnce use effect", debouncedValue);
-    if (searchQuery != searchText) {
-      console.log("inside if deboubnce use effect", debouncedValue);
-      getShowsBySearch(debouncedValue);
-      dispatch(updateSearchString(debouncedValue));
+    if (!debouncedValue && !searchQuery) {
+      getAllshows();
+      dispatch(updateSearchString(""));
+    } else {
+      if (searchQuery != searchText) {
+        getShowsBySearch(debouncedValue);
+        dispatch(updateSearchString(debouncedValue));
+      }
     }
   }, [debouncedValue]);
 
   // api integration methods
   const getAllshows = async () => {
-    const tvShowsList: TVShowDetailValues[] = await listallTvShows();
-    // getGeneres(tvShowsList);
-    // getShowList(tvShowsList);
-    // console.log("tvshows", tvShowsList);
+    try {
+      setLoading(true);
+      const tvShowsList: TVShowDetailValues[] = await listallTvShows();
+      getGeneres(tvShowsList as ShowList[]);
+      getShowList(tvShowsList as ShowList[]);
+    } catch (error) {
+      dispatch(updateError(true));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getShowsBySearch = async (searchValue: string) => {
     try {
-      console.log("getShowsBySearch");
+      setLoading(true);
       const tvShowsList: TVShowDetails[] = await listShowsBySearch(searchValue);
-      getGeneres(tvShowsList);
-      getShowList(tvShowsList);
+      getGeneres(tvShowsList as ShowList[]);
+      getShowList(tvShowsList as ShowList[]);
     } catch (error) {
       dispatch(updateError(true));
+    }
+    finally{
+      setLoading(false);
     }
   };
 
   // helper methods
 
-  const getGeneres = (tvShowsList: TVShowDetails[]) => {
+  const getGeneres = (tvShowsList: ShowList[]) => {
     const generreList = tvShowsList.reduce(
-      (genereList: string[], tvShowsListValue: TVShowDetails) => {
-        if (tvShowsListValue.show.genres) {
-          genereList.push(...tvShowsListValue.show.genres);
+      (genereList: string[], tvShowsListValue: ShowList) => {
+        if (tvShowsListValue?.show?.genres ?? tvShowsListValue?.genres) {
+          genereList.push(
+            ...(tvShowsListValue?.show?.genres ?? tvShowsListValue?.genres)
+          );
         }
         return genereList;
       },
@@ -79,23 +95,26 @@ const Dashboard: React.FC = () => {
     dispatch(recievedGeneres([...new Set(generreList)]));
   };
 
-  const getShowList = (tvShowsList: TVShowDetails[]) => {
-    const showList: TVShow[] = tvShowsList.map(
-      (tvShowsListValue: TVShowDetails) => {
-        return {
-          showName: tvShowsListValue?.show?.name,
-          showImage: tvShowsListValue?.show?.image,
-          ratings: tvShowsListValue?.show?.rating.average,
-          summary: tvShowsListValue?.show?.summary,
-          runtime: tvShowsListValue?.show?.runTime,
-          genereList: tvShowsListValue?.show?.genres,
-          id: tvShowsListValue?.show?.id,
-          officialSite: tvShowsListValue?.show?.officialSite,
-          status: tvShowsListValue?.show?.status,
-          schedule: tvShowsListValue?.show?.schedule,
-        } as TVShow;
-      }
-    );
+  const getShowList = (tvShowsList: ShowList[]) => {
+    const showList: TVShow[] = tvShowsList.map((tvShowsListValue: ShowList) => {
+      return {
+        showName: tvShowsListValue?.show?.name ?? tvShowsListValue?.name,
+        showImage: tvShowsListValue?.show?.image ?? tvShowsListValue?.image,
+        ratings:
+          tvShowsListValue?.show?.rating?.average ??
+          tvShowsListValue?.rating?.average,
+        summary: tvShowsListValue?.show?.summary ?? tvShowsListValue?.summary,
+        runtime: tvShowsListValue?.show?.runTime ?? tvShowsListValue?.runTime,
+        genereList: tvShowsListValue?.show?.genres ?? tvShowsListValue?.genres,
+        id: tvShowsListValue?.show?.id ?? tvShowsListValue?.id,
+        officialSite:
+          tvShowsListValue?.show?.officialSite ??
+          tvShowsListValue?.officialSite,
+        status: tvShowsListValue?.show?.status ?? tvShowsListValue?.status,
+        schedule:
+          tvShowsListValue?.show?.schedule ?? tvShowsListValue?.schedule,
+      } as TVShow;
+    });
     dispatch(recievedShowList(showList));
   };
 
@@ -107,14 +126,25 @@ const Dashboard: React.FC = () => {
           type="text"
           value={searchQuery}
           onChange={(e) => {
-            console.log("ON change called", e.target.value);
-            // add type
             setSearchQuery(e.target.value);
           }}
           placeholder="Search your favourite tv show"
           className={styles.searchInput}
         ></input>
       </section>
+      {loading && (
+        <div  className={styles.loaderWrapper}>
+          <Circles
+            height="80"
+            width="80"
+            color="#A8CABA"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          ></Circles>
+        </div>
+      )}
       {error && (
         <section className={styles.noResults}>
           <div className={styles.noResultsData}>
