@@ -1,3 +1,4 @@
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { TVShow } from "../../types/types";
 import styles from "./show-list.module.css";
 
@@ -6,7 +7,15 @@ interface ShowListValues {
   tvShowsList: TVShow[];
 }
 const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
-  console.log("inside show list", tvShowsList);
+  const navigate = useNavigate();
+
+  //dom methods
+  const showDetailsPage = (showId: number) => {
+    navigate({
+      pathname: "/showDetails",
+      search: createSearchParams({ id: showId.toString() }).toString(),
+    });
+  };
   return (
     <article className={styles.showListrows}>
       <div className={styles.genereName}>{genereName}</div>
@@ -14,7 +23,11 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
         {tvShowsList.map((tvShowsList: TVShow) => {
           if (tvShowsList.genereList.indexOf(genereName) > -1) {
             return (
-              <div className={styles.showItem} key={tvShowsList.id}>
+              <div
+                className={styles.showItem}
+                key={tvShowsList.id}
+                onClick={() => showDetailsPage(tvShowsList.id)}
+              >
                 <img
                   src={tvShowsList?.showImage?.medium}
                   className={styles.showImg}
@@ -39,14 +52,6 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
                     </div>
                   </section>
                 </div>
-                {/* <div>
-                  {
-                    tvShowsList.genereList.map((genereName:string)=>{
-                     return <span className={styles.genereListItem}>{genereName}</span>
-                    })
-                  }  
-                  Hello
-                </div> */}
               </div>
             );
           }

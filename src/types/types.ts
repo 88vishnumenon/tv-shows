@@ -2,15 +2,22 @@ export interface TVShow {
   showName: string;
   showImage: {medium:string,original:string};
   ratings: string;
-  summary: string;
+  summary: string | TrustedHTML;
   runtime: number;
-  genereList:string[]
-  id:number
+  genereList:string[];
+  id:number;
+  officialSite:string;
+  status:string;
+  schedule: { time: string; days: string[] };
+
 }
 
 export interface TVShowDetails {
   score: string;
-  show: {
+  show:TVShowDetailValues
+}
+
+export interface TVShowDetailValues{
     averageRuntime: number;
     dvdCountry: string;
     ended: string;
@@ -30,7 +37,7 @@ export interface TVShowDetails {
     premiered: string;
     rating: { average: string };
     runTime: number;
-    scheduled: { time: string; days: string[] };
+    schedule: { time: string; days: string[] };
     status: string;
     summary: string;
     type: string;
@@ -38,5 +45,4 @@ export interface TVShowDetails {
     url: string;
     webChannel: string;
     weight: number;
-  };
 }
