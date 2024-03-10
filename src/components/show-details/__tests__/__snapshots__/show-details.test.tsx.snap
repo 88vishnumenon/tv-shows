@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render show details component snapshot is rendered 1`] = `
+<DocumentFragment>
+  <section
+    class="detailsWrapper"
+    data-testid="details-page"
+  >
+    <h1
+      class="showTitle"
+    />
+    <section
+      class="detailsSection"
+    >
+      <img
+        class="showImage"
+        data-testid="show-image"
+      />
+      <section
+        class="showInformaton"
+      >
+        <div
+          class="description"
+        />
+        <div
+          class="showDetails"
+        >
+          <div
+            class="showDetailValues"
+          >
+            <span
+              class="label"
+            >
+              Schedule:
+            </span>
+            <span
+              class="values"
+              data-testid="schedule-value"
+            >
+              Monday at 10:00
+            </span>
+          </div>
+          <div
+            class="showDetailValues"
+          >
+            <span
+              class="label"
+            >
+              Rating:
+            </span>
+            <span
+              class="values"
+            >
+              <span
+                class="fa fa-star checked"
+              />
+              <span>
+                 3
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+    </section>
+  </section>
+</DocumentFragment>
+`;

@@ -1,25 +1,28 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import styles from "./dashboard.module.css";
-import { listallTvShows, listShowsBySearch } from "../../services /api";
+import { listallTvShows, listShowsBySearch } from "../../services/api";
 import useDebounce from "../../shared/hooks/useDebounceHook";
 import { TVShow, TVShowDetailValues, TVShowDetails } from "../../types/types";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { recievedGeneres, recievedShowList, updateError, updateSearchString } from "../../store/showSlice";
+import {
+  recievedGeneres,
+  recievedShowList,
+  updateError,
+  updateSearchString,
+} from "../../store/showSlice";
 import ShowList from "./show-list";
-import noData from "../../assets/images/no-data.png";
-import welcome from "../../assets/images/welcome.png";
+import { useEffect, useState } from "react";
 
-const Dashboard = () => {
-    console.log("Dashboard Rendered");
+const Dashboard: React.FC = () => {
+  console.log("dashboard rendered");
   //intialise values
   const dispatch = useAppDispatch();
 
   //state values
-  const genereList = useAppSelector((state) => state.generesList);
-  const showList = useAppSelector((state) => state.showList);
-  const searchText = useAppSelector((state) => state.searchString);
-  const error = useAppSelector((state) => state.error);
-  console.log(genereList);
+  const genereList = useAppSelector((state) => state.tvshow.generesList);
+  const showList = useAppSelector((state) => state.tvshow.showList);
+  const searchText = useAppSelector((state) => state.tvshow.searchString);
+  const error = useAppSelector((state) => state.tvshow.error);
   //useStates
   const [searchQuery, setSearchQuery] = useState<string>(searchText);
   const debouncedValue = useDebounce(searchQuery, 500);
@@ -30,30 +33,34 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if(searchQuery != searchText){
-    getShowsBySearch(debouncedValue);
-    dispatch(updateSearchString(debouncedValue));
+    console.log("searchQuery", searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    console.log("inside deboubnce use effect", debouncedValue);
+    if (searchQuery != searchText) {
+      console.log("inside if deboubnce use effect", debouncedValue);
+      getShowsBySearch(debouncedValue);
+      dispatch(updateSearchString(debouncedValue));
     }
   }, [debouncedValue]);
 
-
-
   // api integration methods
   const getAllshows = async () => {
-    const tvShowsList:TVShowDetailValues[] = await listallTvShows();
+    const tvShowsList: TVShowDetailValues[] = await listallTvShows();
     // getGeneres(tvShowsList);
     // getShowList(tvShowsList);
-   // console.log("tvshows", tvShowsList);
+    // console.log("tvshows", tvShowsList);
   };
 
   const getShowsBySearch = async (searchValue: string) => {
-    try{
-    const tvShowsList: TVShowDetails[] = await listShowsBySearch(searchValue);
-    getGeneres(tvShowsList);
-    getShowList(tvShowsList);
-    }
-    catch(error){
-        dispatch(updateError(true));
+    try {
+      console.log("getShowsBySearch");
+      const tvShowsList: TVShowDetails[] = await listShowsBySearch(searchValue);
+      getGeneres(tvShowsList);
+      getShowList(tvShowsList);
+    } catch (error) {
+      dispatch(updateError(true));
     }
   };
 
@@ -62,14 +69,14 @@ const Dashboard = () => {
   const getGeneres = (tvShowsList: TVShowDetails[]) => {
     const generreList = tvShowsList.reduce(
       (genereList: string[], tvShowsListValue: TVShowDetails) => {
-        if (tvShowsListValue.show.genres ) {
+        if (tvShowsListValue.show.genres) {
           genereList.push(...tvShowsListValue.show.genres);
         }
         return genereList;
       },
       []
     );
-     dispatch(recievedGeneres([...new Set(generreList)]));
+    dispatch(recievedGeneres([...new Set(generreList)]));
   };
 
   const getShowList = (tvShowsList: TVShowDetails[]) => {
@@ -96,26 +103,25 @@ const Dashboard = () => {
     <article className={styles.dashboardWrapper}>
       <section className={styles.inputWrapper}>
         <input
+          data-testid="search-bar"
           type="text"
           value={searchQuery}
           onChange={(e) => {
+            console.log("ON change called", e.target.value);
             // add type
             setSearchQuery(e.target.value);
           }}
-          placeholder="Search"
+          placeholder="Search your favourite tv show"
           className={styles.searchInput}
         ></input>
       </section>
-      {
-        error &&<section className={styles.noResults}>
-        <div className={styles.noResultsData}>
-          {/* <img src={noData} style={}></img> */}
-          <span className={styles.noDataMessage}>
-            Error
-          </span>
-        </div>
-      </section>
-      }
+      {error && (
+        <section className={styles.noResults}>
+          <div className={styles.noResultsData}>
+            <img src={"assets/images/error.png"}></img>
+          </div>
+        </section>
+      )}
       {genereList.length > 0 && showList.length > 0 && !error && (
         <section className={styles.list}>
           {genereList.map((genereName: string, index: number) => {
@@ -144,8 +150,14 @@ const Dashboard = () => {
       {showList.length == 0 && !searchQuery && !error && (
         <section className={styles.noResults}>
           <div className={styles.noResultsData}>
-            <img src={welcome} className={styles.welcomeImg}></img>
-            <span className={styles.noDataMessage}>
+            <img
+              src={"assets/images/welcome.png"}
+              className={styles.welcomeImg}
+            ></img>
+            <span
+              className={styles.noDataMessage}
+              data-testid="welcome-message"
+            >
               You can search for your favourite TV shows here!
             </span>
           </div>

@@ -23,6 +23,7 @@ const showSlice = createSlice({
     recievedGeneres(state,action: PayloadAction<string[]>){
         const genereList = action.payload;
         state.generesList = genereList;
+        state.error = false;
 
     },
     recievedShowList(state,action: PayloadAction<TVShow[]>){

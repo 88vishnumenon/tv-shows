@@ -1,6 +1,8 @@
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { TVShow } from "../../types/types";
 import styles from "./show-list.module.css";
+import * as React from "react";
+
 
 interface ShowListValues {
   genereName: string;
@@ -18,7 +20,7 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
   };
   return (
     <article className={styles.showListrows}>
-      <div className={styles.genereName}>{genereName}</div>
+      <div data-testid="genere-name" className={styles.genereName}>{genereName}</div>
       <section className={styles.showWrapper}>
         {tvShowsList.map((tvShowsList: TVShow) => {
           if (tvShowsList.genereList.indexOf(genereName) > -1) {
@@ -26,6 +28,7 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
               <div
                 className={styles.showItem}
                 key={tvShowsList.id}
+                data-testid="show-cards"
                 onClick={() => showDetailsPage(tvShowsList.id)}
               >
                 <img

@@ -1,75 +1,78 @@
 .dashboardWrapper {
-    background-image: linear-gradient(to right top, #a8caba, #7daaae, #66889e, #626481, #5d4157);
-    width: 100%;
-    height: 95vh;
-    overflow-x: hidden;
-
+  background-image: linear-gradient(
+    to right top,
+    #a8caba,
+    #7daaae,
+    #66889e,
+    #626481,
+    #5d4157
+  );
+  width: 100%;
+  height: 95vh;
+  overflow-x: hidden;
 }
-
 .inputWrapper {
-    display: flex;
-    width: 100%;
-    height: 2em;
-    justify-content: center;
-    padding: 10px;
-    margin-top: 10px;
-
+  display: flex;
+  width: 100%;
+  height: 2em;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .searchInput {
-    border: 1px solid #0E0E0E !important;
-    border-radius: 5px;
-    background: #a8caba;
-    width: 300px;
-    /* color: white; */
-    height: 40px;
-    background-image: url("../../assets/images/search-icon.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding-left: 5em;
-    font-weight: bold;
+  border: 1px solid #0e0e0e !important;
+  border-radius: 5px;
+  background: #a8caba;
+  width: 300px;
+  height: 40px;
+  background-image: url("../../../public/assets/images/search-icon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 5em;
+  font-weight: bold;
 }
 
 .searchInput:focus {
-    outline: none;
+  outline: none;
 }
 
 .list {
-    margin: 5px;
-    max-height: 88vh;
-    overflow-y: scroll;
+  margin: 5px;
+  max-height: 87vh;
+  overflow-y: scroll;
 }
 
 .noResults {
-    color: white;
-    height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: white;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .noDataMessage {
-    font-weight: 700;
-    display: inline-block;
-    width: 400px;
-    text-align: center;
-    line-height: 26px;
-    font-size: 20px;
+  font-weight: 700;
+  display: inline-block;
+  width: 400px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 20px;
 }
 
 /* mdedia queries */
 @media screen and (max-width: 600px) {
-    .noResultsData {
-        display: flex;
-        flex-direction: column;
-    }
+  .noResultsData {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .welcomeImg {
-        max-width: 20%;
-        margin: auto;
-    }
+  .welcomeImg {
+    max-width: 20%;
+    margin: auto;
+  }
 
-    .searchInput {
-        width: 200px;
-    }
+  .searchInput {
+    width: 200px;
+  }
 }

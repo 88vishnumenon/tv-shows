@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dashboard component should match snapshot 1`] = `
+<DocumentFragment>
+  <article
+    class="dashboardWrapper"
+  >
+    <section
+      class="inputWrapper"
+    >
+      <input
+        class="searchInput"
+        data-testid="search-bar"
+        placeholder="Search you favourite tv show"
+        type="text"
+        value=""
+      />
+    </section>
+    <section
+      class="noResults"
+    >
+      <div
+        class="noResultsData"
+      >
+        <img
+          class="welcomeImg"
+          src="assets/images/welcome.png"
+        />
+        <span
+          class="noDataMessage"
+          data-testid="welcome-message"
+        >
+          You can search for your favourite TV shows here!
+        </span>
+      </div>
+    </section>
+  </article>
+</DocumentFragment>
+`;
