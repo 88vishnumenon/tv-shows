@@ -35,14 +35,4 @@ describe("dashboard component", () => {
     });
   })
 
-  // it("should render shows based on search",async()=>{
-  //   renderWithContext(<Dashboard />);
-  //   const searchElement = await screen.findByTestId("search-bar") ;
-  //   fireEvent.change(searchElement, { target: { value: "A" } });
-  //   await waitFor(() => expect(listShowsBySearchSpy).toHaveBeenCalled(), {
-  //     timeout: 500,
-  //   });
-
-  // })
-
 });
