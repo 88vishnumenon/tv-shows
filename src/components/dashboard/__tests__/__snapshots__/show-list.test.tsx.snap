@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`show-list component snapshot is rendered 1`] = `
+<DocumentFragment>
+  <article
+    class="showListrows"
+  >
+    <div
+      class="genereName"
+      data-testid="genere-name"
+    >
+      DRAMA
+    </div>
+    <section
+      class="showWrapper"
+    >
+      <div
+        class="showItem"
+        data-testid="show-cards"
+      >
+        <img
+          class="showImg"
+          src="https://static.tvmaze.com/uploads/images/medium_portrait/482/1205757.jpg"
+        />
+        <div
+          class="showDetails"
+        >
+          <span
+            class="title"
+          >
+            Professor T
+          </span>
+          <section
+            class="showDetailsValues"
+          >
+            <div
+              class="favouriteSection"
+            >
+              <span
+                class="fa fa-star checked"
+              />
+              <span>
+                 7.6
+              </span>
+            </div>
+            <div>
+              <span
+                class="genereList genereLeft"
+              >
+                DRAMA | COMEDY | THRILLERS
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </article>
+</DocumentFragment>
+`;
