@@ -67,24 +67,6 @@ exports[`dashboard component should match snapshot 1`] = `
         </svg>
       </div>
     </div>
-    <section
-      class="noResults"
-    >
-      <div
-        class="noResultsData"
-      >
-        <img
-          class="welcomeImg"
-          src="assets/images/welcome.png"
-        />
-        <span
-          class="noDataMessage"
-          data-testid="welcome-message"
-        >
-          You can search for your favourite TV shows here!
-        </span>
-      </div>
-    </section>
   </article>
 </DocumentFragment>
 `;
