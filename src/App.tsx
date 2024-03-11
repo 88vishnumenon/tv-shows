@@ -1,7 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 
 
 // component imports
@@ -17,6 +16,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Dashboard></Dashboard>} />
     <Route path="showDetails" element={<ShowDetails></ShowDetails>} />
+    <Route path="*" element={<Navigate to="/" replace />} /> 
 </Routes>
 </>
   );

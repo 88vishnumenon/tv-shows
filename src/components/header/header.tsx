@@ -1,9 +1,12 @@
 //Imports
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 
 const Header = () => {
     const navigate = useNavigate();
+    const path = useLocation().pathname;
+    const shouldShowHomeBtn = path == "/showDetails";
+
 
     //dom methods
     const toHomePage = ()=>{
@@ -14,10 +17,10 @@ const Header = () => {
     return (
         <section className={styles.header}>
 
-         <button className={styles.backBtn} onClick={()=>toHomePage()}>
+        {shouldShowHomeBtn && <button className={styles.backBtn} onClick={()=>toHomePage()}>
          <i className="fa fa-home" aria-hidden="true"></i>
 
-         </button>
+         </button>}
         </section>
       );
 }
