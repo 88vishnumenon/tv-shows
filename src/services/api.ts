@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import axios from "../shared/services/interceptor";
 import { TVShowDetailValues, TVShowDetails } from "../types/types";
 

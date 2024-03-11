@@ -5,7 +5,6 @@ import { TVShow } from "../../types/types";
 import styles from "./show-details.module.css";
 import * as React from "react";
 
-
 const ShowDetails = () => {
   const [val] = useSearchParams();
   const [selectedShow, setSelectedShow] = useState<TVShow>();
@@ -13,9 +12,10 @@ const ShowDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // check id passed and load the show information from store
     const selectedShowId = +(val.get("id") ?? 0);
-    if(!selectedShowId){
-       navigate("/");
+    if (!selectedShowId) {
+      navigate("/");
     }
     setSelectedShow(
       showList.filter(
@@ -30,7 +30,7 @@ const ShowDetails = () => {
         <img
           src={selectedShow?.showImage.original}
           className={styles.showImage}
-          data-testid = "show-image"
+          data-testid="show-image"
         ></img>
         <section className={styles.showInformaton}>
           <div
@@ -73,7 +73,9 @@ const ShowDetails = () => {
             {selectedShow?.status && (
               <div className={styles.showDetailValues}>
                 <span className={styles.label}>Status:</span>
-                <span className={styles.values} data-testid="status-value">{selectedShow?.status}</span>
+                <span className={styles.values} data-testid="status-value">
+                  {selectedShow?.status}
+                </span>
               </div>
             )}
           </div>

@@ -6,7 +6,9 @@ const customAxios = axios.create({
   baseURL: `https://api.tvmaze.com`,
 });
 
-const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+const onRequest = (
+  config: InternalAxiosRequestConfig
+): InternalAxiosRequestConfig => {
   return config;
 };
 
@@ -20,11 +22,7 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-    // not showing the error when the error is of cancelled request
-    // if (error.message != "axios request cancelled"){
-    //   toast.error("Oops, something went wrong!");
-    // } 
-    return Promise.reject(error);
+  return Promise.reject(error);
 };
 
 customAxios.interceptors.request.use(

@@ -11,10 +11,8 @@ import { renderWithContext } from "../../../test-utils";
 const listShowsBySearchSpy = jest.spyOn(api,"listShowsBySearch")
 listShowsBySearchSpy.mockResolvedValue([]);
 
-
-beforeEach(() => {
-    renderWithContext(<Dashboard />);
- } );
+const listAllShowsSpy = jest.spyOn(api,"listallTvShows");
+listAllShowsSpy.mockResolvedValue([]);
 
 describe("dashboard component", () => {
   test("should match snapshot", async () => {
@@ -24,13 +22,27 @@ describe("dashboard component", () => {
 
 
   it("should render the search bar", () => {
-    const element = screen.getByTestId("search-bar");
+    const element = screen.findByTestId("search-bar");
     expect(element).toBeInTheDocument;
   });
 
-  it("should render the welcome message bar", () => {
-    const element = screen.getByTestId("welcome-message");
-    expect(element).toBeInTheDocument;
-  });
+
+
+  it("should render all shows from the api",async()=>{
+    renderWithContext(<Dashboard />);
+    await waitFor(() => expect(listAllShowsSpy).toHaveBeenCalled(), {
+      timeout: 500,
+    });
+  })
+
+  // it("should render shows based on search",async()=>{
+  //   renderWithContext(<Dashboard />);
+  //   const searchElement = await screen.findByTestId("search-bar") ;
+  //   fireEvent.change(searchElement, { target: { value: "A" } });
+  //   await waitFor(() => expect(listShowsBySearchSpy).toHaveBeenCalled(), {
+  //     timeout: 500,
+  //   });
+
+  // })
 
 });

@@ -24,7 +24,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `Tech-Stack used in the application:`
 1.The application does not use any ## `UI library` as there was no requirement of many complex elements . The application is built
-  using native html components.
-2.For making API calls ## `axios` has been used . It is not mandatory to use axios ,natyive browser API fetch can be also used.
-3.For mainting data state in front end  ## `redux` has been used .## `Redux toolkit` is used for implementing redux.It was decided to use redux as it is something i am familiar with and also it gives more structure to the data flow.  But other alternatives like zustand , recoil can be also used here.
+  using native html components.\
+2.For making API calls ## `axios` has been used . It is not mandatory to use axios ,natyive browser API fetch can be also used.\
+3.For mainting data state in front end  ## `redux` has been used .## `Redux toolkit` is used for implementing redux.It was decided to use redux as it is something i am familiar with and also it gives more structure to the data flow.  But other alternatives like zustand , recoil can be also used here.\
 4. ## `Jest` and ## `React testing lirary` is used for implementing unit test cases for the main components.

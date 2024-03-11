@@ -3,7 +3,6 @@ import { TVShow } from "../../types/types";
 import styles from "./show-list.module.css";
 import * as React from "react";
 
-
 interface ShowListValues {
   genereName: string;
   tvShowsList: TVShow[];
@@ -13,6 +12,7 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
 
   //dom methods
   const showDetailsPage = (showId: number) => {
+    // navigate to details page
     navigate({
       pathname: "/showDetails",
       search: createSearchParams({ id: showId.toString() }).toString(),
@@ -20,7 +20,9 @@ const ShowList: React.FC<ShowListValues> = ({ genereName, tvShowsList }) => {
   };
   return (
     <article className={styles.showListrows}>
-      <div data-testid="genere-name" className={styles.genereName}>{genereName}</div>
+      <div data-testid="genere-name" className={styles.genereName}>
+        {genereName}
+      </div>
       <section className={styles.showWrapper}>
         {tvShowsList.map((tvShowsList: TVShow) => {
           if (tvShowsList.genereList.indexOf(genereName) > -1) {

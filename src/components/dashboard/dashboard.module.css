@@ -43,7 +43,7 @@
   overflow-y: scroll;
 }
 
-.noResults {
+.userMessageWrapper {
   color: white;
   height: 50%;
   display: flex;
@@ -68,7 +68,7 @@
 
 /* mdedia queries */
 @media screen and (max-width: 600px) {
-  .noResultsData {
+  .userMessage {
     display: flex;
     flex-direction: column;
   }
@@ -80,5 +80,6 @@
 
   .searchInput {
     width: 200px;
+    padding-left: 3em;
   }
 }

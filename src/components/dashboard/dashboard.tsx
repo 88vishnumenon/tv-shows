@@ -25,14 +25,17 @@ const Dashboard: React.FC = () => {
   const showList = useAppSelector((state) => state.tvshow.showList);
   const searchText = useAppSelector((state) => state.tvshow.searchString);
   const error = useAppSelector((state) => state.tvshow.error);
+
   //useStates
   const [searchQuery, setSearchQuery] = useState<string>(searchText);
   const [loading, setLoading] = useState(false);
 
+  //customHook
   const debouncedValue = useDebounce(searchQuery, 500);
 
   //use effects
   useEffect(() => {
+    //get all shows on load
     if (!searchQuery) {
       getAllshows();
     }
@@ -40,18 +43,21 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (!debouncedValue && !searchQuery) {
+      // when no search data reset the page
       getAllshows();
       dispatch(updateSearchString(""));
     } else {
       if (searchQuery != searchText) {
+        //get shows based on user search
         getShowsBySearch(debouncedValue);
         dispatch(updateSearchString(debouncedValue));
       }
     }
   }, [debouncedValue]);
 
-  // api integration methods
+  // API integration methods
   const getAllshows = async () => {
+    // api calls to get all shows
     try {
       setLoading(true);
       const tvShowsList: TVShowDetailValues[] = await listallTvShows();
@@ -65,6 +71,7 @@ const Dashboard: React.FC = () => {
   };
 
   const getShowsBySearch = async (searchValue: string) => {
+    // api calls to get all shows by search
     try {
       setLoading(true);
       const tvShowsList: TVShowDetails[] = await listShowsBySearch(searchValue);
@@ -72,8 +79,7 @@ const Dashboard: React.FC = () => {
       getShowList(tvShowsList as ShowList[]);
     } catch (error) {
       dispatch(updateError(true));
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -81,6 +87,7 @@ const Dashboard: React.FC = () => {
   // helper methods
 
   const getGeneres = (tvShowsList: ShowList[]) => {
+    // get the genere list from the api response and push to store
     const generreList = tvShowsList.reduce(
       (genereList: string[], tvShowsListValue: ShowList) => {
         if (tvShowsListValue?.show?.genres ?? tvShowsListValue?.genres) {
@@ -96,6 +103,7 @@ const Dashboard: React.FC = () => {
   };
 
   const getShowList = (tvShowsList: ShowList[]) => {
+    // get the show list from the api response and push to store
     const showList: TVShow[] = tvShowsList.map((tvShowsListValue: ShowList) => {
       return {
         showName: tvShowsListValue?.show?.name ?? tvShowsListValue?.name,
@@ -133,7 +141,7 @@ const Dashboard: React.FC = () => {
         ></input>
       </section>
       {loading && (
-        <div  className={styles.loaderWrapper}>
+        <div className={styles.loaderWrapper}>
           <Circles
             height="80"
             width="80"
@@ -146,14 +154,14 @@ const Dashboard: React.FC = () => {
         </div>
       )}
       {error && (
-        <section className={styles.noResults}>
-          <div className={styles.noResultsData}>
+        <section className={styles.userMessageWrapper}>
+          <div className={styles.userMessage}>
             <img src={"assets/images/error.png"}></img>
           </div>
         </section>
       )}
       {genereList.length > 0 && showList.length > 0 && !error && (
-        <section className={styles.list}>
+        <section className={styles.list} data-testid="list-section">
           {genereList.map((genereName: string, index: number) => {
             return (
               <ShowList
@@ -166,29 +174,12 @@ const Dashboard: React.FC = () => {
         </section>
       )}
       {showList.length == 0 && searchQuery && !error && (
-        <section className={styles.noResults}>
-          <div className={styles.noResultsData}>
+        <section className={styles.userMessageWrapper}>
+          <div className={styles.userMessage}>
             {/* <img src={noData} style={}></img> */}
             <span className={styles.noDataMessage}>
               We cannot find the item you are searching for,may be a little
               spelling mistake?
-            </span>
-          </div>
-        </section>
-      )}
-
-      {showList.length == 0 && !searchQuery && !error && (
-        <section className={styles.noResults}>
-          <div className={styles.noResultsData}>
-            <img
-              src={"assets/images/welcome.png"}
-              className={styles.welcomeImg}
-            ></img>
-            <span
-              className={styles.noDataMessage}
-              data-testid="welcome-message"
-            >
-              You can search for your favourite TV shows here!
             </span>
           </div>
         </section>

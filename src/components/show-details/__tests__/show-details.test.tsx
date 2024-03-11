@@ -34,5 +34,4 @@ describe("render show details component", () => {
     expect(statusElement.textContent).toContain(mockShowList[0].status);
   });
 
-  // it.todo("show details has values")
 });
