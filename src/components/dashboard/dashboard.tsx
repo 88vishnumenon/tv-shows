@@ -13,6 +13,7 @@ import {
 import ShowList from "./show-list";
 import { useEffect, useState } from "react";
 import { Circles } from "react-loader-spinner";
+import useIsFirstRender from "../../shared/hooks/useFirstRenderHook";
 
 type ShowList = TVShowDetails & TVShowDetailValues;
 
@@ -32,16 +33,21 @@ const Dashboard: React.FC = () => {
 
   //customHook
   const debouncedValue = useDebounce(searchQuery, 500);
+  const is_first_render = useIsFirstRender(); 
+
 
   //use effects
   useEffect(() => {
     //get all shows on load
-    if (!searchQuery) {
+    if (!searchQuery && showList.length == 0) {
       getAllshows();
     }
   }, []);
 
   useEffect(() => {
+    if (is_first_render) { 
+      return;
+  }
     if (!debouncedValue && !searchQuery) {
       // when no search data reset the page
       getAllshows();
